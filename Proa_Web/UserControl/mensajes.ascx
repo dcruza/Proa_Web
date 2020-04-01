@@ -3,12 +3,7 @@
 <link href='<%= Page.ResolveUrl("~/css/msgBoxLight.css") %>' rel="stylesheet" />
 <script src='<%= Page.ResolveUrl("~/js/jquery.msgBox.js") %>'></script>
 <%--<script src=<%= Page.ResolveUrl("~/Scripts/jquery-ui.js") %>></script>--%>
-<script type="text/javascript">
-    //// Muestra un calendario
-    //$(document).ready(function () {
-    //    $('.datepicker-field').datepicker();
-    //});
-   
+<script type="text/javascript">  
 
     // Muestra los mensaje de éxito, error y alertas
     function msgBox(title, val, type) {
