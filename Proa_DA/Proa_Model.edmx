@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Proa_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="paciente">
+          <Key>
+            <PropertyRef Name="idPaciente" />
+          </Key>
+          <Property Name="idPaciente" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="apellido1" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="apellido2" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="fechaNacim" Type="date" Nullable="false" />
+          <Property Name="sexo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="idMadre" Type="nvarchar" MaxLength="15" />
+          <Property Name="nombreMadre" Type="nvarchar" MaxLength="30" />
+          <Property Name="apellido1Madre" Type="nvarchar" MaxLength="30" />
+          <Property Name="apellido2Madre" Type="nvarchar" MaxLength="30" />
+          <Property Name="idPadre" Type="nvarchar" MaxLength="15" />
+          <Property Name="nombrePadre" Type="nvarchar" MaxLength="30" />
+          <Property Name="apellido1Padre" Type="nvarchar" MaxLength="30" />
+          <Property Name="apellido2Padre" Type="nvarchar" MaxLength="30" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="telefonoPaciente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPaciente" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="idTipoTelefono" Type="smallint" Nullable="false" />
+          <Property Name="numero" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipoTelefono">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="esCasa" Type="bit" Nullable="false" />
+          <Property Name="esTrabajo" Type="bit" Nullable="false" />
+          <Property Name="esCelular" Type="bit" Nullable="false" />
+          <Property Name="esUrgencia" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_telefonoPaciente_paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="telefonoPaciente" Type="Self.telefonoPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="telefonoPaciente">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_telefonoPaciente_tipoTelefono">
+          <End Role="tipoTelefono" Type="Self.tipoTelefono" Multiplicity="1" />
+          <End Role="telefonoPaciente" Type="Self.telefonoPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipoTelefono">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="telefonoPaciente">
+              <PropertyRef Name="idTipoTelefono" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_BuscarPacienteARCAMEDISYS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PROA">
+          <Parameter Name="id" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apel1" Type="varchar" Mode="In" />
+          <Parameter Name="apel2" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_BuscarPacienteProa" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PROA">
+          <Parameter Name="id" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apel1" Type="varchar" Mode="In" />
+          <Parameter Name="apel2" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="Proa_ModelStoreContainer">
+          <EntitySet Name="paciente" EntityType="Self.paciente" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="telefonoPaciente" EntityType="Self.telefonoPaciente" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="tipoTelefono" EntityType="Self.tipoTelefono" Schema="PROA" store:Type="Tables" />
+          <AssociationSet Name="FK_telefonoPaciente_paciente" Association="Self.FK_telefonoPaciente_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="telefonoPaciente" EntitySet="telefonoPaciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_telefonoPaciente_tipoTelefono" Association="Self.FK_telefonoPaciente_tipoTelefono">
+            <End Role="tipoTelefono" EntitySet="tipoTelefono" />
+            <End Role="telefonoPaciente" EntitySet="telefonoPaciente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Proa_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="paciente">
+          <Key>
+            <PropertyRef Name="idPaciente" />
+          </Key>
+          <Property Name="idPaciente" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="apellido1" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="apellido2" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fechaNacim" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="idMadre" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="nombreMadre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="apellido1Madre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="apellido2Madre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="idPadre" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="nombrePadre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="apellido1Padre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="apellido2Padre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="telefonoPaciente" Relationship="Proa_Model.FK_telefonoPaciente_paciente" FromRole="paciente" ToRole="telefonoPaciente" />
+        </EntityType>
+        <EntityContainer Name="Proa_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="paciente" EntityType="Self.paciente" />
+          <EntitySet Name="telefonoPaciente" EntityType="Proa_Model.telefonoPaciente" />
+          <EntitySet Name="tipoTelefono" EntityType="Proa_Model.tipoTelefono" />
+          <AssociationSet Name="FK_telefonoPaciente_paciente" Association="Proa_Model.FK_telefonoPaciente_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="telefonoPaciente" EntitySet="telefonoPaciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_telefonoPaciente_tipoTelefono" Association="Proa_Model.FK_telefonoPaciente_tipoTelefono">
+            <End Role="tipoTelefono" EntitySet="tipoTelefono" />
+            <End Role="telefonoPaciente" EntitySet="telefonoPaciente" />
+          </AssociationSet>
+          <FunctionImport Name="sp_BuscarPacienteProa" ReturnType="Collection(Proa_Model.sp_BuscarPacienteProa_Result)">
+            <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apel1" Mode="In" Type="String" />
+            <Parameter Name="apel2" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_BuscarPacienteARCAMEDISYS" ReturnType="Collection(Proa_Model.sp_BuscarPacienteARCAMEDISYS_Result)">
+            <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apel1" Mode="In" Type="String" />
+            <Parameter Name="apel2" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="telefonoPaciente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPaciente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="idTipoTelefono" Type="Int16" Nullable="false" />
+          <Property Name="numero" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="paciente" Relationship="Proa_Model.FK_telefonoPaciente_paciente" FromRole="telefonoPaciente" ToRole="paciente" />
+          <NavigationProperty Name="tipoTelefono" Relationship="Proa_Model.FK_telefonoPaciente_tipoTelefono" FromRole="telefonoPaciente" ToRole="tipoTelefono" />
+        </EntityType>
+        <EntityType Name="tipoTelefono">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="esCasa" Type="Boolean" Nullable="false" />
+          <Property Name="esTrabajo" Type="Boolean" Nullable="false" />
+          <Property Name="esCelular" Type="Boolean" Nullable="false" />
+          <Property Name="esUrgencia" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="telefonoPaciente" Relationship="Proa_Model.FK_telefonoPaciente_tipoTelefono" FromRole="tipoTelefono" ToRole="telefonoPaciente" />
+        </EntityType>
+        <Association Name="FK_telefonoPaciente_paciente">
+          <End Type="Proa_Model.paciente" Role="paciente" Multiplicity="1" />
+          <End Type="Proa_Model.telefonoPaciente" Role="telefonoPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="telefonoPaciente">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_telefonoPaciente_tipoTelefono">
+          <End Type="Proa_Model.tipoTelefono" Role="tipoTelefono" Multiplicity="1" />
+          <End Type="Proa_Model.telefonoPaciente" Role="telefonoPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipoTelefono">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="telefonoPaciente">
+              <PropertyRef Name="idTipoTelefono" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_BuscarPacienteProa_Result">
+          <Property Type="String" Name="idPaciente" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="apellido1" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="apellido2" Nullable="false" MaxLength="30" />
+          <Property Type="DateTime" Name="fechaNacim" Nullable="false" />
+          <Property Type="String" Name="sexo" Nullable="false" MaxLength="1" />
+          <Property Type="Boolean" Name="activo" Nullable="false" />
+          <Property Type="String" Name="idMadre" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="nombreMadre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="apellido1Madre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="apellido2Madre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="idPadre" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="nombrePadre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="apellido1Padre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="apellido2Padre" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_BuscarPacienteARCAMEDISYS_Result">
+          <Property Type="String" Name="idPaciente" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="apellido1" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="apellido2" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="fechaNacim" Nullable="true" Precision="23" />
+          <Property Type="String" Name="sexo" Nullable="true" MaxLength="1" />
+          <Property Type="Boolean" Name="activo" Nullable="true" />
+          <Property Type="Int32" Name="idMadre" Nullable="false" />
+          <Property Type="String" Name="nombreMadre" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="apellido1Madre" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="apellido2Madre" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="idPadre" Nullable="false" />
+          <Property Type="String" Name="nombrePadre" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="apellido1Padre" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="apellido2Padre" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="TelefCasa" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TelefUrg" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TelefOfi" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TelefCel" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Proa_ModelStoreContainer" CdmEntityContainer="Proa_Entities">
+          <EntitySetMapping Name="paciente">
+            <EntityTypeMapping TypeName="Proa_Model.paciente">
+              <MappingFragment StoreEntitySet="paciente">
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="fechaNacim" ColumnName="fechaNacim" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="idMadre" ColumnName="idMadre" />
+                <ScalarProperty Name="nombreMadre" ColumnName="nombreMadre" />
+                <ScalarProperty Name="apellido1Madre" ColumnName="apellido1Madre" />
+                <ScalarProperty Name="apellido2Madre" ColumnName="apellido2Madre" />
+                <ScalarProperty Name="idPadre" ColumnName="idPadre" />
+                <ScalarProperty Name="nombrePadre" ColumnName="nombrePadre" />
+                <ScalarProperty Name="apellido1Padre" ColumnName="apellido1Padre" />
+                <ScalarProperty Name="apellido2Padre" ColumnName="apellido2Padre" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="telefonoPaciente">
+            <EntityTypeMapping TypeName="Proa_Model.telefonoPaciente">
+              <MappingFragment StoreEntitySet="telefonoPaciente">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="idTipoTelefono" ColumnName="idTipoTelefono" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipoTelefono">
+            <EntityTypeMapping TypeName="Proa_Model.tipoTelefono">
+              <MappingFragment StoreEntitySet="tipoTelefono">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="esUrgencia" ColumnName="esUrgencia" />
+                <ScalarProperty Name="esCelular" ColumnName="esCelular" />
+                <ScalarProperty Name="esTrabajo" ColumnName="esTrabajo" />
+                <ScalarProperty Name="esCasa" ColumnName="esCasa" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_BuscarPacienteProa" FunctionName="Proa_Model.Store.sp_BuscarPacienteProa">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Proa_Model.sp_BuscarPacienteProa_Result">
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="fechaNacim" ColumnName="fechaNacim" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="idMadre" ColumnName="idMadre" />
+                <ScalarProperty Name="nombreMadre" ColumnName="nombreMadre" />
+                <ScalarProperty Name="apellido1Madre" ColumnName="apellido1Madre" />
+                <ScalarProperty Name="apellido2Madre" ColumnName="apellido2Madre" />
+                <ScalarProperty Name="idPadre" ColumnName="idPadre" />
+                <ScalarProperty Name="nombrePadre" ColumnName="nombrePadre" />
+                <ScalarProperty Name="apellido1Padre" ColumnName="apellido1Padre" />
+                <ScalarProperty Name="apellido2Padre" ColumnName="apellido2Padre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_BuscarPacienteARCAMEDISYS" FunctionName="Proa_Model.Store.sp_BuscarPacienteARCAMEDISYS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Proa_Model.sp_BuscarPacienteARCAMEDISYS_Result">
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="fechaNacim" ColumnName="fechaNacim" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="idMadre" ColumnName="idMadre" />
+                <ScalarProperty Name="nombreMadre" ColumnName="nombreMadre" />
+                <ScalarProperty Name="apellido1Madre" ColumnName="apellido1Madre" />
+                <ScalarProperty Name="apellido2Madre" ColumnName="apellido2Madre" />
+                <ScalarProperty Name="idPadre" ColumnName="idPadre" />
+                <ScalarProperty Name="nombrePadre" ColumnName="nombrePadre" />
+                <ScalarProperty Name="apellido1Padre" ColumnName="apellido1Padre" />
+                <ScalarProperty Name="apellido2Padre" ColumnName="apellido2Padre" />
+                <ScalarProperty Name="TelefCasa" ColumnName="TelefCasa" />
+                <ScalarProperty Name="TelefUrg" ColumnName="TelefUrg" />
+                <ScalarProperty Name="TelefOfi" ColumnName="TelefOfi" />
+                <ScalarProperty Name="TelefCel" ColumnName="TelefCel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
