@@ -73,6 +73,10 @@ namespace Proa_Web
         public const string QS_SEPARADOR_PARAMS = "&";
         public const string QS_NOMPAR_VARS = "QS_vars";
         public const string QS_NOMPAR_PARAMS = "QS_pars";
+        public const string QS_IDPAC = "QS_IPAC";
+        public const string QS_IDSERV = "QS_IDSERV";
+        public const string QS_IDESPC = "QS_IPESPEC";
+
 
         // Nombres de variables de sessión
         public const string SS_NOM_DETSESIONES = "SS_DetSess";
@@ -83,10 +87,31 @@ namespace Proa_Web
         public const string ERR_MESAGE = "Ocurrió un error, por favor contacte al CGI local: ";
         // Nombre del comando de edición de los grids
         public const string GRD_EDIT = "EDITAR";
+        // Nombre del comando de abrir caso de los grids
+        public const string GRD_CASO = "CASO";
+        // Nombre del comando de Agregar caso de los grids
+        public const string GRD_AGREGAR = "AGREGAR";
         /// <summary>
         /// Texto identificador para la confirmación de búsquedas en ARCA/MEDISYS
         /// </summary>
         public const string CONFIRM_BUSQ_ARCA_MEDISYS = "BUSQARCAMEDISYS";
+        /// <summary>
+        /// Texto identificador para la confirmación de Registro de Pacientes
+        /// </summary>
+        public const string CONFIRM_REGISTRAR_PACIENTE = "REGISTRAPACIENTE";
+        /// <summary>
+        /// Texto identificador para la confirmación de Regreso a Página Anterior
+        /// </summary>
+        public const string CONFIRM_REGRESAR = "REGRESARANTERIOR";
+
+        /// <summary>
+        /// Indica que es una estancia o caso importada desde ARCA/MEDISYS
+        /// </summary>
+        public const string CASO_ARCA_MEDISYS = "CASOARCAMEDISYS";
+        /// <summary>
+        /// Indica que es un caso registrado en PROA
+        /// </summary>
+        public const string CASO_PROA = "CASOPROA";
 
         /// <summary>
         /// Obtiene el nombre completo del usuario activo
@@ -321,6 +346,15 @@ namespace Proa_Web
             }
             else
                 return num;
+        }
+
+        /// <summary>
+        /// Obtener Centro Médico
+        /// </summary>
+        /// <returns></returns>
+        public static string CM()
+        {
+            return ConfigurationManager.AppSettings["cm"];
         }
 
     }

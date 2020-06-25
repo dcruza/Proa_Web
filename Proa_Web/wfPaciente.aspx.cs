@@ -18,6 +18,9 @@ namespace Proa_Web
                 if (IsPostBack)
                 {
                     OnConfirmMsgBox();
+
+                    //rwCasos.VisibleOnPageLoad = false;
+
                 }
                 else
                 {
@@ -63,7 +66,7 @@ namespace Proa_Web
         {
             List<sp_BuscarPacienteProa_Result> lPacs;
             Proa_Entities ent;
-
+            
             if (ValidarParametrosBusquedaPac())
             {
                 ent = new Proa_Entities();
@@ -106,6 +109,18 @@ namespace Proa_Web
                 BuscarPacienteBDExterno();
 
                 hdfBusquedaArcaMedisys.Value = clsGlobals.BUSCA_ARCA_MEDISYS.SI.ToString();
+            }
+            else if (confirmValue == clsGlobals.CONFIRM_REGISTRAR_PACIENTE)
+            {
+                CargarEdicionPac(grdResultadoBusq.SelectedRow);
+
+                GuardarInfoPaciente(false);
+
+                RedirigirConfirm(grdResultadoBusq.SelectedRow.Cells[2].Text.Trim());
+
+                LimpiarCamposEdicion();
+
+                //msgBox.ShowMsg(Page.Title, "¡La información del Paciente se almacenó de manera correcta! ", clsGlobals.messageTypes.info);                
             }
         }
 
@@ -185,12 +200,62 @@ namespace Proa_Web
                     {                       
                         CargarEdicionPac(row);
                     }
+                    else if(e.CommandName == clsGlobals.GRD_CASO)
+                    {
+                        AbrirCaso(row);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 msgBox.ShowMsg(Page.Title, clsGlobals.ERR_MESAGE + ex.Message, clsGlobals.messageTypes.error);
             }
+        }
+
+        /// <summary>
+        /// Redirigir a página de Registro de Casos
+        /// </summary>
+        /// <param name="idPac"></param>
+        private void RedirigirConfirm(string idPac)
+        {
+            //rwCasosConfirm.NavigateUrl = "wfAbrirEstancia.aspx?" + clsGlobals.QS_IDPAC + "=" + idPac;
+            //rwCasosConfirm.VisibleOnPageLoad = true;            
+            Response.Redirect("wfAbrirEstancia.aspx?" + clsGlobals.QS_IDPAC + "=" + idPac, false);
+        }
+
+
+        /// <summary>
+        /// Abrir y cargar ventana de casos
+        /// </summary>
+        /// <param name="row">Fila seleccionada en el grid</param>
+        private void AbrirCaso(GridViewRow row)
+        {
+            string idPac = row.Cells[2].Text.Trim();
+
+            if (new Proa_Entities().paciente.Where(p => p.idPaciente == idPac).ToList().Count > 0)
+            {
+                //rwCasos.NavigateUrl = "wfAbrirEstancia.aspx?" + clsGlobals.QS_IDPAC + "=" + idPac;
+                //rwCasos.VisibleOnPageLoad = true;
+                Response.Redirect("wfAbrirEstancia.aspx?" + clsGlobals.QS_IDPAC + "=" + idPac, false);
+            }
+            else
+            {
+                msgBox.ShowConfirm(Page.Title, "Este paciente no se encuentra en la base de datos local. ¿Desea registralo? Verifique que la información sea correcta.", clsGlobals.messageTypes.confirm, clsGlobals.CONFIRM_REGISTRAR_PACIENTE);
+            }
+            /*casoPaciente.idPac = row.Cells[2].Text;
+            casoPaciente.CargarDatosEstancias();
+            
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Popup", "ShowPopup();", true);
+            */
+        }
+
+        /// <summary>
+        /// Ocurre cuando se cambia un servicio en el UserControl de casos
+        /// </summary>
+        protected void casoPaciente_ServicioCambiado(object sender, EventArgs e)
+        {
+            //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Popupx", "HidePopup();", true);
+            //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Popup", "ShowPopup();", true);
         }
 
         /// <summary>
@@ -216,7 +281,7 @@ namespace Proa_Web
             List<sp_BuscarPacienteARCAMEDISYS_Result> lPacsArcaMedisys;
 
             ent = new Proa_Entities();
-            idPac = row.Cells[1].Text;
+            idPac = row.Cells[2].Text;
 
             // Si se está buscando en la BD local de PROA
             if (hdfBusquedaArcaMedisys.Value == clsGlobals.BUSCA_ARCA_MEDISYS.NO.ToString())
@@ -530,22 +595,22 @@ namespace Proa_Web
 
             // Introducir datos
             pac.activo = true;
-            pac.apellido1 = txtApel1Pac.Text.Trim();
-            pac.apellido1Madre = txtApel1Madre.Text.Trim();
-            pac.apellido1Padre = txtApel1Padre.Text.Trim();
-            pac.apellido2 = txtApel2Pac.Text.Trim();
-            pac.apellido2Madre = txtApel2Madre.Text.Trim();
-            pac.apellido2Padre = txtApel2Padre.Text.Trim();
+            pac.apellido1 = txtApel1Pac.Text.Trim().ToUpper();
+            pac.apellido1Madre = txtApel1Madre.Text.Trim().ToUpper();
+            pac.apellido1Padre = txtApel1Padre.Text.Trim().ToUpper();
+            pac.apellido2 = txtApel2Pac.Text.Trim().ToUpper();
+            pac.apellido2Madre = txtApel2Madre.Text.Trim().ToUpper();
+            pac.apellido2Padre = txtApel2Padre.Text.Trim().ToUpper();
             pac.fechaHoraIn = DateTime.Now;
             pac.fechaNacim = DateTime.Parse(txtFechaNacim.Text);
-            pac.idMadre = txtIdMadre.Text.Trim();
-            pac.idPaciente = idPac;
-            pac.idPadre = txtIdPadre.Text.Trim();
+            pac.idMadre = txtIdMadre.Text.Trim().ToUpper();
+            pac.idPaciente = idPac.ToUpper();
+            pac.idPadre = txtIdPadre.Text.Trim().ToUpper();
             pac.idUsuarioIn = clsGlobals.codUsuarioActivo;
-            pac.nombre = txtNomPac.Text.Trim();
-            pac.nombreMadre = txtNomMadre.Text.Trim();
-            pac.nombrePadre = txtNomPadre.Text.Trim();
-            pac.sexo = rblSexo.SelectedValue;
+            pac.nombre = txtNomPac.Text.Trim().ToUpper();
+            pac.nombreMadre = txtNomMadre.Text.Trim().ToUpper();
+            pac.nombrePadre = txtNomPadre.Text.Trim().ToUpper();
+            pac.sexo = rblSexo.SelectedValue.ToUpper();
 
             ent.telefonoPaciente.RemoveRange(pac.telefonoPaciente);
             pac.telefonoPaciente = EstablecerTelefonos(ref pac);
@@ -739,12 +804,8 @@ namespace Proa_Web
         {
             pnlBusq1.Visible = ocultar;
             pnlBusq2.Visible = ocultar;
-
-            //if (ocultar == true)
-            //{
-            //    VisibilidadLlaves(ocultar);
-            //}
-        }
+            
+        }     
     }
 
 }

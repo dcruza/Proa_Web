@@ -48,9 +48,42 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telerik.Web.UI">
+      <HintPath>..\Proa_Web\dll\Telerik.Web.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="antimicrobiano.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="aplicaAntimicrobiano.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="aplicaAntimicrobianoGermen.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="aplicaAntimicrobianoSeguim.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="estadoAplicaAntimicrobiano.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="estadoPaciente.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="estanciaPaciente.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="germen.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="motivoSuspension.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="paciente.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="periodo.cs">
       <DependentUpon>Proa_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Proa_Model.Context.cs">
@@ -75,15 +108,41 @@
     <Compile Include="sp_BuscarPacienteProa_Result.cs">
       <DependentUpon>Proa_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_lista_Estancias_x_Id_Result.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_lista_Estancias_x_Serv_Espec_Result.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="telefonoPaciente.cs">
       <DependentUpon>Proa_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="tipoTelefono.cs">
       <DependentUpon>Proa_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="via.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_CIE104D.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_Estancia.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_SERVICIOS_POR_CENTRO.cs">
+      <DependentUpon>Proa_Model.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <EntityDeploy Include="Proa_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

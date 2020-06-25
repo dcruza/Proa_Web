@@ -5,6 +5,142 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Proa_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="antimicrobiano">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="diasRecomendados" Type="smallint" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aplicaAntimicrobiano">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="idPaciente" />
+            <PropertyRef Name="numCaso" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPaciente" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="numCaso" Type="int" Nullable="false" />
+          <Property Name="seguimiento" Type="bit" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aplicaAntimicrobianoGermen">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="idAplicaAntimicrobiano" />
+            <PropertyRef Name="idPaciente" />
+            <PropertyRef Name="numCaso" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idAplicaAntimicrobiano" Type="int" Nullable="false" />
+          <Property Name="idPaciente" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="numCaso" Type="int" Nullable="false" />
+          <Property Name="idGermen" Type="smallint" Nullable="false" />
+          <Property Name="idAntimicrobiano" Type="smallint" Nullable="false" />
+          <Property Name="fechaInicio" Type="date" Nullable="false" />
+          <Property Name="diasTratamiento" Type="smallint" Nullable="false" />
+          <Property Name="dosisMg" Type="smallint" Nullable="false" />
+          <Property Name="frecuencia" Type="smallint" Nullable="false" />
+          <Property Name="idPeriodo" Type="smallint" Nullable="false" />
+          <Property Name="idVia" Type="smallint" Nullable="false" />
+          <Property Name="idEstadoAplicaAntimicrobiano" Type="smallint" Nullable="false" />
+          <Property Name="idMotivoSuspension" Type="smallint" />
+          <Property Name="fechaSuspension" Type="datetime" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aplicaAntimicrobianoSeguim">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="idAplicaAntimicrobianoGermen" />
+            <PropertyRef Name="idAplicaAntimicrobiano" />
+            <PropertyRef Name="idPaciente" />
+            <PropertyRef Name="numCaso" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idAplicaAntimicrobianoGermen" Type="int" Nullable="false" />
+          <Property Name="idAplicaAntimicrobiano" Type="int" Nullable="false" />
+          <Property Name="idPaciente" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="numCaso" Type="int" Nullable="false" />
+          <Property Name="fechaHora" Type="datetime" Nullable="false" />
+          <Property Name="idEstadoPaciente" Type="smallint" Nullable="false" />
+          <Property Name="observacion" Type="nvarchar" MaxLength="1000" />
+          <Property Name="cobertura" Type="nvarchar" MaxLength="500" />
+          <Property Name="historiaClinica" Type="nvarchar" MaxLength="1000" />
+          <Property Name="cultivos" Type="nvarchar" MaxLength="1000" />
+          <Property Name="recomendaciones" Type="nvarchar" MaxLength="1000" />
+          <Property Name="respuesta" Type="nvarchar" MaxLength="1000" />
+          <Property Name="recibido" Type="bit" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estadoAplicaAntimicrobiano">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="esSuspender" Type="bit" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estadoPaciente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estanciaPaciente">
+          <Key>
+            <PropertyRef Name="idPaciente" />
+            <PropertyRef Name="numCaso" />
+          </Key>
+          <Property Name="idPaciente" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="numCaso" Type="int" Nullable="false" />
+          <Property Name="esCasoArca" Type="bit" Nullable="false" />
+          <Property Name="cod4DIngreso" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="fechaIngreso" Type="date" Nullable="false" />
+          <Property Name="fechaEgreso" Type="date" />
+          <Property Name="codServicioInicial" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="codEspecialidadInicial" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+          <Property Name="codCentroMedico" Type="nvarchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="germen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="motivoSuspension">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="paciente">
           <Key>
             <PropertyRef Name="idPaciente" />
@@ -23,6 +159,16 @@
           <Property Name="nombrePadre" Type="nvarchar" MaxLength="30" />
           <Property Name="apellido1Padre" Type="nvarchar" MaxLength="30" />
           <Property Name="apellido2Padre" Type="nvarchar" MaxLength="30" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="periodo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
           <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
@@ -53,6 +199,215 @@
           <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="via">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechaHoraIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PROA-PP.PROA.vw_CIE104D' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_CIE104D">
+          <Key>
+            <PropertyRef Name="COD4D" />
+            <PropertyRef Name="DESCRIPCION" />
+          </Key>
+          <Property Name="COD4D" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PROA-PP.PROA.vw_Estancia' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Estancia">
+          <Key>
+            <PropertyRef Name="CASO" />
+            <PropertyRef Name="IDENTIFICACION" />
+            <PropertyRef Name="NOMBRE" />
+            <PropertyRef Name="FECHA_INGRESO" />
+            <PropertyRef Name="COD_SERVICIO_INGRESO" />
+            <PropertyRef Name="COD_SERVICIO_INGRESO_PADRE" />
+            <PropertyRef Name="COD_SERVICIO_ACTUAL_PADRE" />
+          </Key>
+          <Property Name="CASO" Type="int" Nullable="false" />
+          <Property Name="COD_CENTRO_MEDICO" Type="varchar" MaxLength="4" />
+          <Property Name="IDENTIFICACION" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="APELLIDO1" Type="varchar" MaxLength="30" />
+          <Property Name="APELLIDO2" Type="varchar" MaxLength="30" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="FECHA_INGRESO" Type="datetime" Nullable="false" />
+          <Property Name="COD_SERVICIO_INGRESO" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="SERVICIO_INGRESO" Type="varchar" MaxLength="30" />
+          <Property Name="COD_SERVICIO_INGRESO_PADRE" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="SERVICIO_INGRESO_PADRE" Type="varchar" MaxLength="30" />
+          <Property Name="COD_SERVICIO_ACTUAL" Type="char" MaxLength="3" />
+          <Property Name="SERVICIO_ACTUAL" Type="varchar" MaxLength="30" />
+          <Property Name="COD_SERVICIO_ACTUAL_PADRE" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="SERVICIO_ACTUAL_PADRE" Type="varchar" MaxLength="30" />
+          <Property Name="FECHA_EGRESO" Type="datetime" />
+          <Property Name="COD_SERVICIO_EGRESO" Type="char" MaxLength="3" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PROA-PP.PROA.vw_SERVICIOS_POR_CENTRO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_SERVICIOS_POR_CENTRO">
+          <Key>
+            <PropertyRef Name="COD_CENTRO_MEDICO" />
+            <PropertyRef Name="COD_SERVICIO" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="COD_CENTRO_MEDICO" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="COD_SERVICIO" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="30" />
+          <Property Name="AREA" Type="numeric" Precision="1" Scale="0" />
+          <Property Name="Expr1" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="COD_SERVICIO_PADRE" Type="char" MaxLength="3" />
+        </EntityType>
+        <Association Name="FK_aplicaAntimicrobiano_estanciaPaciente">
+          <End Role="estanciaPaciente" Type="Self.estanciaPaciente" Multiplicity="1" />
+          <End Role="aplicaAntimicrobiano" Type="Self.aplicaAntimicrobiano" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estanciaPaciente">
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobiano">
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_antimicrobiano">
+          <End Role="antimicrobiano" Type="Self.antimicrobiano" Multiplicity="1" />
+          <End Role="aplicaAntimicrobianoGermen" Type="Self.aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="antimicrobiano">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idAntimicrobiano" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano">
+          <End Role="aplicaAntimicrobiano" Type="Self.aplicaAntimicrobiano" Multiplicity="1" />
+          <End Role="aplicaAntimicrobianoGermen" Type="Self.aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aplicaAntimicrobiano">
+              <PropertyRef Name="id" />
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idAplicaAntimicrobiano" />
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano">
+          <End Role="estadoAplicaAntimicrobiano" Type="Self.estadoAplicaAntimicrobiano" Multiplicity="1" />
+          <End Role="aplicaAntimicrobianoGermen" Type="Self.aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadoAplicaAntimicrobiano">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idEstadoAplicaAntimicrobiano" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_germen">
+          <End Role="germen" Type="Self.germen" Multiplicity="1" />
+          <End Role="aplicaAntimicrobianoGermen" Type="Self.aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="germen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idGermen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_motivoSuspension">
+          <End Role="motivoSuspension" Type="Self.motivoSuspension" Multiplicity="0..1" />
+          <End Role="aplicaAntimicrobianoGermen" Type="Self.aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="motivoSuspension">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idMotivoSuspension" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_periodo">
+          <End Role="periodo" Type="Self.periodo" Multiplicity="1" />
+          <End Role="aplicaAntimicrobianoGermen" Type="Self.aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="periodo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idPeriodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_via">
+          <End Role="via" Type="Self.via" Multiplicity="1" />
+          <End Role="aplicaAntimicrobianoGermen" Type="Self.aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="via">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idVia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen">
+          <End Role="aplicaAntimicrobianoGermen" Type="Self.aplicaAntimicrobianoGermen" Multiplicity="1" />
+          <End Role="aplicaAntimicrobianoSeguim" Type="Self.aplicaAntimicrobianoSeguim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="id" />
+              <PropertyRef Name="idAplicaAntimicrobiano" />
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoSeguim">
+              <PropertyRef Name="idAplicaAntimicrobianoGermen" />
+              <PropertyRef Name="idAplicaAntimicrobiano" />
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoSeguim_estadoPaciente">
+          <End Role="estadoPaciente" Type="Self.estadoPaciente" Multiplicity="1" />
+          <End Role="aplicaAntimicrobianoSeguim" Type="Self.aplicaAntimicrobianoSeguim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadoPaciente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoSeguim">
+              <PropertyRef Name="idEstadoPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_estanciaPaciente_paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="estanciaPaciente" Type="Self.estanciaPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="estanciaPaciente">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_telefonoPaciente_paciente">
           <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
           <End Role="telefonoPaciente" Type="Self.telefonoPaciente" Multiplicity="*" />
@@ -77,6 +432,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_BuscarPacienteARCAMEDISYS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PROA">
           <Parameter Name="id" Type="varchar" Mode="In" />
           <Parameter Name="nombre" Type="varchar" Mode="In" />
@@ -89,10 +475,111 @@
           <Parameter Name="apel1" Type="varchar" Mode="In" />
           <Parameter Name="apel2" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_lista_Estancias_x_Id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PROA">
+          <Parameter Name="id" Type="varchar" Mode="In" />
+          <Parameter Name="ccm" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_lista_Estancias_x_Serv_Espec" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PROA">
+          <Parameter Name="codServ" Type="nvarchar" Mode="In" />
+          <Parameter Name="codEspec" Type="nvarchar" Mode="In" />
+          <Parameter Name="ccm" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="Proa_ModelStoreContainer">
+          <EntitySet Name="antimicrobiano" EntityType="Self.antimicrobiano" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="aplicaAntimicrobiano" EntityType="Self.aplicaAntimicrobiano" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="aplicaAntimicrobianoGermen" EntityType="Self.aplicaAntimicrobianoGermen" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="aplicaAntimicrobianoSeguim" EntityType="Self.aplicaAntimicrobianoSeguim" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="estadoAplicaAntimicrobiano" EntityType="Self.estadoAplicaAntimicrobiano" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="estadoPaciente" EntityType="Self.estadoPaciente" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="estanciaPaciente" EntityType="Self.estanciaPaciente" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="germen" EntityType="Self.germen" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="motivoSuspension" EntityType="Self.motivoSuspension" Schema="PROA" store:Type="Tables" />
           <EntitySet Name="paciente" EntityType="Self.paciente" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="periodo" EntityType="Self.periodo" Schema="PROA" store:Type="Tables" />
           <EntitySet Name="telefonoPaciente" EntityType="Self.telefonoPaciente" Schema="PROA" store:Type="Tables" />
           <EntitySet Name="tipoTelefono" EntityType="Self.tipoTelefono" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="via" EntityType="Self.via" Schema="PROA" store:Type="Tables" />
+          <EntitySet Name="vw_CIE104D" EntityType="Self.vw_CIE104D" store:Type="Views" store:Schema="PROA">
+            <DefiningQuery>SELECT 
+    [vw_CIE104D].[COD4D] AS [COD4D], 
+    [vw_CIE104D].[DESCRIPCION] AS [DESCRIPCION]
+    FROM [PROA].[vw_CIE104D] AS [vw_CIE104D]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Estancia" EntityType="Self.vw_Estancia" store:Type="Views" store:Schema="PROA">
+            <DefiningQuery>SELECT 
+    [vw_Estancia].[CASO] AS [CASO], 
+    [vw_Estancia].[COD_CENTRO_MEDICO] AS [COD_CENTRO_MEDICO], 
+    [vw_Estancia].[IDENTIFICACION] AS [IDENTIFICACION], 
+    [vw_Estancia].[APELLIDO1] AS [APELLIDO1], 
+    [vw_Estancia].[APELLIDO2] AS [APELLIDO2], 
+    [vw_Estancia].[NOMBRE] AS [NOMBRE], 
+    [vw_Estancia].[FECHA_INGRESO] AS [FECHA_INGRESO], 
+    [vw_Estancia].[COD_SERVICIO_INGRESO] AS [COD_SERVICIO_INGRESO], 
+    [vw_Estancia].[SERVICIO_INGRESO] AS [SERVICIO_INGRESO], 
+    [vw_Estancia].[COD_SERVICIO_INGRESO_PADRE] AS [COD_SERVICIO_INGRESO_PADRE], 
+    [vw_Estancia].[SERVICIO_INGRESO_PADRE] AS [SERVICIO_INGRESO_PADRE], 
+    [vw_Estancia].[COD_SERVICIO_ACTUAL] AS [COD_SERVICIO_ACTUAL], 
+    [vw_Estancia].[SERVICIO_ACTUAL] AS [SERVICIO_ACTUAL], 
+    [vw_Estancia].[COD_SERVICIO_ACTUAL_PADRE] AS [COD_SERVICIO_ACTUAL_PADRE], 
+    [vw_Estancia].[SERVICIO_ACTUAL_PADRE] AS [SERVICIO_ACTUAL_PADRE], 
+    [vw_Estancia].[FECHA_EGRESO] AS [FECHA_EGRESO], 
+    [vw_Estancia].[COD_SERVICIO_EGRESO] AS [COD_SERVICIO_EGRESO]
+    FROM [PROA].[vw_Estancia] AS [vw_Estancia]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_SERVICIOS_POR_CENTRO" EntityType="Self.vw_SERVICIOS_POR_CENTRO" store:Type="Views" store:Schema="PROA">
+            <DefiningQuery>SELECT 
+    [vw_SERVICIOS_POR_CENTRO].[COD_CENTRO_MEDICO] AS [COD_CENTRO_MEDICO], 
+    [vw_SERVICIOS_POR_CENTRO].[COD_SERVICIO] AS [COD_SERVICIO], 
+    [vw_SERVICIOS_POR_CENTRO].[DESCRIPCION] AS [DESCRIPCION], 
+    [vw_SERVICIOS_POR_CENTRO].[AREA] AS [AREA], 
+    [vw_SERVICIOS_POR_CENTRO].[Expr1] AS [Expr1], 
+    [vw_SERVICIOS_POR_CENTRO].[COD_SERVICIO_PADRE] AS [COD_SERVICIO_PADRE]
+    FROM [PROA].[vw_SERVICIOS_POR_CENTRO] AS [vw_SERVICIOS_POR_CENTRO]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_aplicaAntimicrobiano_estanciaPaciente" Association="Self.FK_aplicaAntimicrobiano_estanciaPaciente">
+            <End Role="estanciaPaciente" EntitySet="estanciaPaciente" />
+            <End Role="aplicaAntimicrobiano" EntitySet="aplicaAntimicrobiano" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_antimicrobiano" Association="Self.FK_aplicaAntimicrobianoGermen_antimicrobiano">
+            <End Role="antimicrobiano" EntitySet="antimicrobiano" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano" Association="Self.FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano">
+            <End Role="aplicaAntimicrobiano" EntitySet="aplicaAntimicrobiano" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano" Association="Self.FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano">
+            <End Role="estadoAplicaAntimicrobiano" EntitySet="estadoAplicaAntimicrobiano" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_germen" Association="Self.FK_aplicaAntimicrobianoGermen_germen">
+            <End Role="germen" EntitySet="germen" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_motivoSuspension" Association="Self.FK_aplicaAntimicrobianoGermen_motivoSuspension">
+            <End Role="motivoSuspension" EntitySet="motivoSuspension" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_periodo" Association="Self.FK_aplicaAntimicrobianoGermen_periodo">
+            <End Role="periodo" EntitySet="periodo" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_via" Association="Self.FK_aplicaAntimicrobianoGermen_via">
+            <End Role="via" EntitySet="via" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen" Association="Self.FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen">
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+            <End Role="aplicaAntimicrobianoSeguim" EntitySet="aplicaAntimicrobianoSeguim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoSeguim_estadoPaciente" Association="Self.FK_aplicaAntimicrobianoSeguim_estadoPaciente">
+            <End Role="estadoPaciente" EntitySet="estadoPaciente" />
+            <End Role="aplicaAntimicrobianoSeguim" EntitySet="aplicaAntimicrobianoSeguim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_estanciaPaciente_paciente" Association="Self.FK_estanciaPaciente_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="estanciaPaciente" EntitySet="estanciaPaciente" />
+          </AssociationSet>
           <AssociationSet Name="FK_telefonoPaciente_paciente" Association="Self.FK_telefonoPaciente_paciente">
             <End Role="paciente" EntitySet="paciente" />
             <End Role="telefonoPaciente" EntitySet="telefonoPaciente" />
@@ -128,6 +615,7 @@
           <Property Name="idUsuarioIn" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="telefonoPaciente" Relationship="Proa_Model.FK_telefonoPaciente_paciente" FromRole="paciente" ToRole="telefonoPaciente" />
+          <NavigationProperty Name="estanciaPaciente" Relationship="Proa_Model.FK_estanciaPaciente_paciente" FromRole="paciente" ToRole="estanciaPaciente" />
         </EntityType>
         <EntityContainer Name="Proa_Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="paciente" EntityType="Self.paciente" />
@@ -153,6 +641,103 @@
             <Parameter Name="apel1" Mode="In" Type="String" />
             <Parameter Name="apel2" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="vw_CIE104D" EntityType="Proa_Model.vw_CIE104D" />
+          <EntitySet Name="vw_SERVICIOS_POR_CENTRO" EntityType="Proa_Model.vw_SERVICIOS_POR_CENTRO" />
+          <EntitySet Name="estanciaPaciente" EntityType="Proa_Model.estanciaPaciente" />
+          <AssociationSet Name="FK_estanciaPaciente_paciente" Association="Proa_Model.FK_estanciaPaciente_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="estanciaPaciente" EntitySet="estanciaPaciente" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Proa_Model.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Proa_Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="vw_Estancia" EntityType="Proa_Model.vw_Estancia" />
+          <FunctionImport Name="sp_lista_Estancias_x_Id" ReturnType="Collection(Proa_Model.sp_lista_Estancias_x_Id_Result)">
+            <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="ccm" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_lista_Estancias_x_Serv_Espec" ReturnType="Collection(Proa_Model.sp_lista_Estancias_x_Serv_Espec_Result)">
+            <Parameter Name="codServ" Mode="In" Type="String" />
+            <Parameter Name="codEspec" Mode="In" Type="String" />
+            <Parameter Name="ccm" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="antimicrobiano" EntityType="Proa_Model.antimicrobiano" />
+          <EntitySet Name="aplicaAntimicrobiano" EntityType="Proa_Model.aplicaAntimicrobiano" />
+          <EntitySet Name="aplicaAntimicrobianoGermen" EntityType="Proa_Model.aplicaAntimicrobianoGermen" />
+          <EntitySet Name="aplicaAntimicrobianoSeguim" EntityType="Proa_Model.aplicaAntimicrobianoSeguim" />
+          <EntitySet Name="estadoAplicaAntimicrobiano" EntityType="Proa_Model.estadoAplicaAntimicrobiano" />
+          <EntitySet Name="estadoPaciente" EntityType="Proa_Model.estadoPaciente" />
+          <EntitySet Name="germen" EntityType="Proa_Model.germen" />
+          <EntitySet Name="motivoSuspension" EntityType="Proa_Model.motivoSuspension" />
+          <EntitySet Name="periodo" EntityType="Proa_Model.periodo" />
+          <EntitySet Name="via" EntityType="Proa_Model.via" />
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_antimicrobiano" Association="Proa_Model.FK_aplicaAntimicrobianoGermen_antimicrobiano">
+            <End Role="antimicrobiano" EntitySet="antimicrobiano" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobiano_estanciaPaciente" Association="Proa_Model.FK_aplicaAntimicrobiano_estanciaPaciente">
+            <End Role="estanciaPaciente" EntitySet="estanciaPaciente" />
+            <End Role="aplicaAntimicrobiano" EntitySet="aplicaAntimicrobiano" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano" Association="Proa_Model.FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano">
+            <End Role="aplicaAntimicrobiano" EntitySet="aplicaAntimicrobiano" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano" Association="Proa_Model.FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano">
+            <End Role="estadoAplicaAntimicrobiano" EntitySet="estadoAplicaAntimicrobiano" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_germen" Association="Proa_Model.FK_aplicaAntimicrobianoGermen_germen">
+            <End Role="germen" EntitySet="germen" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_motivoSuspension" Association="Proa_Model.FK_aplicaAntimicrobianoGermen_motivoSuspension">
+            <End Role="motivoSuspension" EntitySet="motivoSuspension" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_periodo" Association="Proa_Model.FK_aplicaAntimicrobianoGermen_periodo">
+            <End Role="periodo" EntitySet="periodo" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoGermen_via" Association="Proa_Model.FK_aplicaAntimicrobianoGermen_via">
+            <End Role="via" EntitySet="via" />
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen" Association="Proa_Model.FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen">
+            <End Role="aplicaAntimicrobianoGermen" EntitySet="aplicaAntimicrobianoGermen" />
+            <End Role="aplicaAntimicrobianoSeguim" EntitySet="aplicaAntimicrobianoSeguim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_aplicaAntimicrobianoSeguim_estadoPaciente" Association="Proa_Model.FK_aplicaAntimicrobianoSeguim_estadoPaciente">
+            <End Role="estadoPaciente" EntitySet="estadoPaciente" />
+            <End Role="aplicaAntimicrobianoSeguim" EntitySet="aplicaAntimicrobianoSeguim" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="telefonoPaciente">
           <Key>
@@ -245,6 +830,411 @@
           <Property Type="String" Name="TelefOfi" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="TelefCel" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="vw_CIE104D">
+          <Key>
+            <PropertyRef Name="COD4D" />
+            <PropertyRef Name="DESCRIPCION" />
+          </Key>
+          <Property Name="COD4D" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_SERVICIOS_POR_CENTRO">
+          <Key>
+            <PropertyRef Name="COD_CENTRO_MEDICO" />
+            <PropertyRef Name="COD_SERVICIO" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="COD_CENTRO_MEDICO" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="COD_SERVICIO" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AREA" Type="Decimal" Precision="1" Scale="0" />
+          <Property Name="COD_SERVICIO_PADRE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="Expr1" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="estanciaPaciente">
+          <Key>
+            <PropertyRef Name="idPaciente" />
+            <PropertyRef Name="numCaso" />
+          </Key>
+          <Property Name="idPaciente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="numCaso" Type="Int32" Nullable="false" />
+          <Property Name="codCentroMedico" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="esCasoArca" Type="Boolean" Nullable="false" />
+          <Property Name="cod4DIngreso" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="fechaIngreso" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fechaEgreso" Type="DateTime" Precision="0" />
+          <Property Name="codServicioInicial" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="codEspecialidadInicial" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="paciente" Relationship="Proa_Model.FK_estanciaPaciente_paciente" FromRole="estanciaPaciente" ToRole="paciente" />
+          <NavigationProperty Name="aplicaAntimicrobiano" Relationship="Proa_Model.FK_aplicaAntimicrobiano_estanciaPaciente" FromRole="estanciaPaciente" ToRole="aplicaAntimicrobiano" />
+        </EntityType>
+        <Association Name="FK_estanciaPaciente_paciente">
+          <End Type="Proa_Model.paciente" Role="paciente" Multiplicity="1" />
+          <End Type="Proa_Model.estanciaPaciente" Role="estanciaPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="estanciaPaciente">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="vw_Estancia">
+          <Key>
+            <PropertyRef Name="CASO" />
+            <PropertyRef Name="IDENTIFICACION" />
+            <PropertyRef Name="FECHA_INGRESO" />
+            <PropertyRef Name="COD_SERVICIO_INGRESO" />
+            <PropertyRef Name="NOMBRE" />
+            <PropertyRef Name="COD_SERVICIO_INGRESO_PADRE" />
+            <PropertyRef Name="COD_SERVICIO_ACTUAL_PADRE" />
+          </Key>
+          <Property Name="CASO" Type="Int32" Nullable="false" />
+          <Property Name="COD_CENTRO_MEDICO" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="IDENTIFICACION" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_INGRESO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="COD_SERVICIO_INGRESO" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="COD_SERVICIO_ACTUAL" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="FECHA_EGRESO" Type="DateTime" Precision="3" />
+          <Property Name="COD_SERVICIO_EGRESO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="APELLIDO1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="APELLIDO2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SERVICIO_INGRESO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SERVICIO_ACTUAL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SERVICIO_INGRESO_PADRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SERVICIO_ACTUAL_PADRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="COD_SERVICIO_INGRESO_PADRE" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="COD_SERVICIO_ACTUAL_PADRE" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="sp_lista_Estancias_x_Id_Result">
+          <Property Type="String" Name="idPaciente" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="NombrePac" Nullable="true" MaxLength="92" />
+          <Property Type="Int32" Name="numCaso" Nullable="false" />
+          <Property Type="String" Name="codServicioInicial" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ServicioActual" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="codEspecialidadInicial" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="EspecialidadInicial" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="fechaIngreso" Nullable="false" />
+          <Property Type="DateTime" Name="fechaEgreso" Nullable="true" />
+          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="4" />
+        </ComplexType>
+        <ComplexType Name="sp_lista_Estancias_x_Serv_Espec_Result">
+          <Property Type="String" Name="idPaciente" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="NombrePac" Nullable="true" MaxLength="92" />
+          <Property Type="Int32" Name="numCaso" Nullable="false" />
+          <Property Type="String" Name="codServicioInicial" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ServicioInicial" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="codEspecialidadInicial" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="EspecialidadInicial" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="fechaIngreso" Nullable="false" />
+          <Property Type="Int32" Name="fechaUltSeguimiento" Nullable="true" />
+          <Property Type="Int32" Name="estado" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="antimicrobiano">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="diasRecomendados" Type="Int16" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aplicaAntimicrobianoGermen" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_antimicrobiano" FromRole="antimicrobiano" ToRole="aplicaAntimicrobianoGermen" />
+        </EntityType>
+        <EntityType Name="aplicaAntimicrobiano">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="idPaciente" />
+            <PropertyRef Name="numCaso" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPaciente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="numCaso" Type="Int32" Nullable="false" />
+          <Property Name="seguimiento" Type="Boolean" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="estanciaPaciente" Relationship="Proa_Model.FK_aplicaAntimicrobiano_estanciaPaciente" FromRole="aplicaAntimicrobiano" ToRole="estanciaPaciente" />
+          <NavigationProperty Name="aplicaAntimicrobianoGermen" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano" FromRole="aplicaAntimicrobiano" ToRole="aplicaAntimicrobianoGermen" />
+        </EntityType>
+        <EntityType Name="aplicaAntimicrobianoGermen">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="idAplicaAntimicrobiano" />
+            <PropertyRef Name="idPaciente" />
+            <PropertyRef Name="numCaso" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAplicaAntimicrobiano" Type="Int32" Nullable="false" />
+          <Property Name="idPaciente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="numCaso" Type="Int32" Nullable="false" />
+          <Property Name="idGermen" Type="Int16" Nullable="false" />
+          <Property Name="idAntimicrobiano" Type="Int16" Nullable="false" />
+          <Property Name="fechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="diasTratamiento" Type="Int16" Nullable="false" />
+          <Property Name="dosisMg" Type="Int16" Nullable="false" />
+          <Property Name="frecuencia" Type="Int16" Nullable="false" />
+          <Property Name="idPeriodo" Type="Int16" Nullable="false" />
+          <Property Name="idVia" Type="Int16" Nullable="false" />
+          <Property Name="idEstadoAplicaAntimicrobiano" Type="Int16" Nullable="false" />
+          <Property Name="idMotivoSuspension" Type="Int16" />
+          <Property Name="fechaSuspension" Type="DateTime" Precision="3" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="antimicrobiano" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_antimicrobiano" FromRole="aplicaAntimicrobianoGermen" ToRole="antimicrobiano" />
+          <NavigationProperty Name="aplicaAntimicrobiano" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano" FromRole="aplicaAntimicrobianoGermen" ToRole="aplicaAntimicrobiano" />
+          <NavigationProperty Name="estadoAplicaAntimicrobiano" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano" FromRole="aplicaAntimicrobianoGermen" ToRole="estadoAplicaAntimicrobiano" />
+          <NavigationProperty Name="germen" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_germen" FromRole="aplicaAntimicrobianoGermen" ToRole="germen" />
+          <NavigationProperty Name="motivoSuspension" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_motivoSuspension" FromRole="aplicaAntimicrobianoGermen" ToRole="motivoSuspension" />
+          <NavigationProperty Name="periodo" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_periodo" FromRole="aplicaAntimicrobianoGermen" ToRole="periodo" />
+          <NavigationProperty Name="via" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_via" FromRole="aplicaAntimicrobianoGermen" ToRole="via" />
+          <NavigationProperty Name="aplicaAntimicrobianoSeguim" Relationship="Proa_Model.FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen" FromRole="aplicaAntimicrobianoGermen" ToRole="aplicaAntimicrobianoSeguim" />
+        </EntityType>
+        <EntityType Name="aplicaAntimicrobianoSeguim">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="idAplicaAntimicrobianoGermen" />
+            <PropertyRef Name="idAplicaAntimicrobiano" />
+            <PropertyRef Name="idPaciente" />
+            <PropertyRef Name="numCaso" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAplicaAntimicrobianoGermen" Type="Int32" Nullable="false" />
+          <Property Name="idAplicaAntimicrobiano" Type="Int32" Nullable="false" />
+          <Property Name="idPaciente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="numCaso" Type="Int32" Nullable="false" />
+          <Property Name="fechaHora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idEstadoPaciente" Type="Int16" Nullable="false" />
+          <Property Name="observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="cobertura" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="historiaClinica" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="cultivos" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="recomendaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="respuesta" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="recibido" Type="Boolean" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aplicaAntimicrobianoGermen" Relationship="Proa_Model.FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen" FromRole="aplicaAntimicrobianoSeguim" ToRole="aplicaAntimicrobianoGermen" />
+          <NavigationProperty Name="estadoPaciente" Relationship="Proa_Model.FK_aplicaAntimicrobianoSeguim_estadoPaciente" FromRole="aplicaAntimicrobianoSeguim" ToRole="estadoPaciente" />
+        </EntityType>
+        <EntityType Name="estadoAplicaAntimicrobiano">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="esSuspender" Type="Boolean" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aplicaAntimicrobianoGermen" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano" FromRole="estadoAplicaAntimicrobiano" ToRole="aplicaAntimicrobianoGermen" />
+        </EntityType>
+        <EntityType Name="estadoPaciente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aplicaAntimicrobianoSeguim" Relationship="Proa_Model.FK_aplicaAntimicrobianoSeguim_estadoPaciente" FromRole="estadoPaciente" ToRole="aplicaAntimicrobianoSeguim" />
+        </EntityType>
+        <EntityType Name="germen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aplicaAntimicrobianoGermen" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_germen" FromRole="germen" ToRole="aplicaAntimicrobianoGermen" />
+        </EntityType>
+        <EntityType Name="motivoSuspension">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aplicaAntimicrobianoGermen" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_motivoSuspension" FromRole="motivoSuspension" ToRole="aplicaAntimicrobianoGermen" />
+        </EntityType>
+        <EntityType Name="periodo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aplicaAntimicrobianoGermen" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_periodo" FromRole="periodo" ToRole="aplicaAntimicrobianoGermen" />
+        </EntityType>
+        <EntityType Name="via">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioIn" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fechaHoraIn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aplicaAntimicrobianoGermen" Relationship="Proa_Model.FK_aplicaAntimicrobianoGermen_via" FromRole="via" ToRole="aplicaAntimicrobianoGermen" />
+        </EntityType>
+        <Association Name="FK_aplicaAntimicrobianoGermen_antimicrobiano">
+          <End Type="Proa_Model.antimicrobiano" Role="antimicrobiano" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoGermen" Role="aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="antimicrobiano">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idAntimicrobiano" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobiano_estanciaPaciente">
+          <End Type="Proa_Model.estanciaPaciente" Role="estanciaPaciente" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobiano" Role="aplicaAntimicrobiano" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estanciaPaciente">
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobiano">
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano">
+          <End Type="Proa_Model.aplicaAntimicrobiano" Role="aplicaAntimicrobiano" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoGermen" Role="aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aplicaAntimicrobiano">
+              <PropertyRef Name="id" />
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idAplicaAntimicrobiano" />
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano">
+          <End Type="Proa_Model.estadoAplicaAntimicrobiano" Role="estadoAplicaAntimicrobiano" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoGermen" Role="aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadoAplicaAntimicrobiano">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idEstadoAplicaAntimicrobiano" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_germen">
+          <End Type="Proa_Model.germen" Role="germen" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoGermen" Role="aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="germen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idGermen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_motivoSuspension">
+          <End Type="Proa_Model.motivoSuspension" Role="motivoSuspension" Multiplicity="0..1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoGermen" Role="aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="motivoSuspension">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idMotivoSuspension" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_periodo">
+          <End Type="Proa_Model.periodo" Role="periodo" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoGermen" Role="aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="periodo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idPeriodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoGermen_via">
+          <End Type="Proa_Model.via" Role="via" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoGermen" Role="aplicaAntimicrobianoGermen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="via">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="idVia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen">
+          <End Type="Proa_Model.aplicaAntimicrobianoGermen" Role="aplicaAntimicrobianoGermen" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoSeguim" Role="aplicaAntimicrobianoSeguim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aplicaAntimicrobianoGermen">
+              <PropertyRef Name="id" />
+              <PropertyRef Name="idAplicaAntimicrobiano" />
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoSeguim">
+              <PropertyRef Name="idAplicaAntimicrobianoGermen" />
+              <PropertyRef Name="idAplicaAntimicrobiano" />
+              <PropertyRef Name="idPaciente" />
+              <PropertyRef Name="numCaso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_aplicaAntimicrobianoSeguim_estadoPaciente">
+          <End Type="Proa_Model.estadoPaciente" Role="estadoPaciente" Multiplicity="1" />
+          <End Type="Proa_Model.aplicaAntimicrobianoSeguim" Role="aplicaAntimicrobianoSeguim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadoPaciente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aplicaAntimicrobianoSeguim">
+              <PropertyRef Name="idEstadoPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -348,6 +1338,262 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vw_CIE104D">
+            <EntityTypeMapping TypeName="Proa_Model.vw_CIE104D">
+              <MappingFragment StoreEntitySet="vw_CIE104D">
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="COD4D" ColumnName="COD4D" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_SERVICIOS_POR_CENTRO">
+            <EntityTypeMapping TypeName="Proa_Model.vw_SERVICIOS_POR_CENTRO">
+              <MappingFragment StoreEntitySet="vw_SERVICIOS_POR_CENTRO">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="COD_SERVICIO_PADRE" ColumnName="COD_SERVICIO_PADRE" />
+                <ScalarProperty Name="AREA" ColumnName="AREA" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="COD_SERVICIO" ColumnName="COD_SERVICIO" />
+                <ScalarProperty Name="COD_CENTRO_MEDICO" ColumnName="COD_CENTRO_MEDICO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estanciaPaciente">
+            <EntityTypeMapping TypeName="Proa_Model.estanciaPaciente">
+              <MappingFragment StoreEntitySet="estanciaPaciente">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="codEspecialidadInicial" ColumnName="codEspecialidadInicial" />
+                <ScalarProperty Name="codServicioInicial" ColumnName="codServicioInicial" />
+                <ScalarProperty Name="fechaEgreso" ColumnName="fechaEgreso" />
+                <ScalarProperty Name="fechaIngreso" ColumnName="fechaIngreso" />
+                <ScalarProperty Name="cod4DIngreso" ColumnName="cod4DIngreso" />
+                <ScalarProperty Name="esCasoArca" ColumnName="esCasoArca" />
+                <ScalarProperty Name="codCentroMedico" ColumnName="codCentroMedico" />
+                <ScalarProperty Name="numCaso" ColumnName="numCaso" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Proa_Model.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Proa_Model.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Proa_Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Proa_Model.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Proa_Model.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Proa_Model.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Proa_Model.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Proa_Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Proa_Model.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="vw_Estancia">
+            <EntityTypeMapping TypeName="Proa_Model.vw_Estancia">
+              <MappingFragment StoreEntitySet="vw_Estancia">
+                <ScalarProperty Name="COD_SERVICIO_ACTUAL_PADRE" ColumnName="COD_SERVICIO_ACTUAL_PADRE" />
+                <ScalarProperty Name="COD_SERVICIO_INGRESO_PADRE" ColumnName="COD_SERVICIO_INGRESO_PADRE" />
+                <ScalarProperty Name="SERVICIO_ACTUAL_PADRE" ColumnName="SERVICIO_ACTUAL_PADRE" />
+                <ScalarProperty Name="SERVICIO_INGRESO_PADRE" ColumnName="SERVICIO_INGRESO_PADRE" />
+                <ScalarProperty Name="SERVICIO_ACTUAL" ColumnName="SERVICIO_ACTUAL" />
+                <ScalarProperty Name="SERVICIO_INGRESO" ColumnName="SERVICIO_INGRESO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="APELLIDO2" ColumnName="APELLIDO2" />
+                <ScalarProperty Name="APELLIDO1" ColumnName="APELLIDO1" />
+                <ScalarProperty Name="COD_SERVICIO_EGRESO" ColumnName="COD_SERVICIO_EGRESO" />
+                <ScalarProperty Name="FECHA_EGRESO" ColumnName="FECHA_EGRESO" />
+                <ScalarProperty Name="COD_SERVICIO_ACTUAL" ColumnName="COD_SERVICIO_ACTUAL" />
+                <ScalarProperty Name="COD_SERVICIO_INGRESO" ColumnName="COD_SERVICIO_INGRESO" />
+                <ScalarProperty Name="FECHA_INGRESO" ColumnName="FECHA_INGRESO" />
+                <ScalarProperty Name="IDENTIFICACION" ColumnName="IDENTIFICACION" />
+                <ScalarProperty Name="COD_CENTRO_MEDICO" ColumnName="COD_CENTRO_MEDICO" />
+                <ScalarProperty Name="CASO" ColumnName="CASO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_lista_Estancias_x_Id" FunctionName="Proa_Model.Store.sp_lista_Estancias_x_Id">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Proa_Model.sp_lista_Estancias_x_Id_Result">
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="NombrePac" ColumnName="NombrePac" />
+                <ScalarProperty Name="numCaso" ColumnName="numCaso" />
+                <ScalarProperty Name="codServicioInicial" ColumnName="codServicioInicial" />
+                <ScalarProperty Name="ServicioActual" ColumnName="ServicioActual" />
+                <ScalarProperty Name="codEspecialidadInicial" ColumnName="codEspecialidadInicial" />
+                <ScalarProperty Name="EspecialidadInicial" ColumnName="EspecialidadInicial" />
+                <ScalarProperty Name="fechaIngreso" ColumnName="fechaIngreso" />
+                <ScalarProperty Name="fechaEgreso" ColumnName="fechaEgreso" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_lista_Estancias_x_Serv_Espec" FunctionName="Proa_Model.Store.sp_lista_Estancias_x_Serv_Espec">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Proa_Model.sp_lista_Estancias_x_Serv_Espec_Result">
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="NombrePac" ColumnName="NombrePac" />
+                <ScalarProperty Name="numCaso" ColumnName="numCaso" />
+                <ScalarProperty Name="codServicioInicial" ColumnName="codServicioInicial" />
+                <ScalarProperty Name="ServicioInicial" ColumnName="ServicioInicial" />
+                <ScalarProperty Name="codEspecialidadInicial" ColumnName="codEspecialidadInicial" />
+                <ScalarProperty Name="EspecialidadInicial" ColumnName="EspecialidadInicial" />
+                <ScalarProperty Name="fechaIngreso" ColumnName="fechaIngreso" />
+                <ScalarProperty Name="fechaUltSeguimiento" ColumnName="fechaUltSeguimiento" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="antimicrobiano">
+            <EntityTypeMapping TypeName="Proa_Model.antimicrobiano">
+              <MappingFragment StoreEntitySet="antimicrobiano">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="diasRecomendados" ColumnName="diasRecomendados" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aplicaAntimicrobiano">
+            <EntityTypeMapping TypeName="Proa_Model.aplicaAntimicrobiano">
+              <MappingFragment StoreEntitySet="aplicaAntimicrobiano">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="seguimiento" ColumnName="seguimiento" />
+                <ScalarProperty Name="numCaso" ColumnName="numCaso" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aplicaAntimicrobianoGermen">
+            <EntityTypeMapping TypeName="Proa_Model.aplicaAntimicrobianoGermen">
+              <MappingFragment StoreEntitySet="aplicaAntimicrobianoGermen">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="fechaSuspension" ColumnName="fechaSuspension" />
+                <ScalarProperty Name="idMotivoSuspension" ColumnName="idMotivoSuspension" />
+                <ScalarProperty Name="idEstadoAplicaAntimicrobiano" ColumnName="idEstadoAplicaAntimicrobiano" />
+                <ScalarProperty Name="idVia" ColumnName="idVia" />
+                <ScalarProperty Name="idPeriodo" ColumnName="idPeriodo" />
+                <ScalarProperty Name="frecuencia" ColumnName="frecuencia" />
+                <ScalarProperty Name="dosisMg" ColumnName="dosisMg" />
+                <ScalarProperty Name="diasTratamiento" ColumnName="diasTratamiento" />
+                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
+                <ScalarProperty Name="idAntimicrobiano" ColumnName="idAntimicrobiano" />
+                <ScalarProperty Name="idGermen" ColumnName="idGermen" />
+                <ScalarProperty Name="numCaso" ColumnName="numCaso" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="idAplicaAntimicrobiano" ColumnName="idAplicaAntimicrobiano" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aplicaAntimicrobianoSeguim">
+            <EntityTypeMapping TypeName="Proa_Model.aplicaAntimicrobianoSeguim">
+              <MappingFragment StoreEntitySet="aplicaAntimicrobianoSeguim">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="recibido" ColumnName="recibido" />
+                <ScalarProperty Name="respuesta" ColumnName="respuesta" />
+                <ScalarProperty Name="recomendaciones" ColumnName="recomendaciones" />
+                <ScalarProperty Name="cultivos" ColumnName="cultivos" />
+                <ScalarProperty Name="historiaClinica" ColumnName="historiaClinica" />
+                <ScalarProperty Name="cobertura" ColumnName="cobertura" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="idEstadoPaciente" ColumnName="idEstadoPaciente" />
+                <ScalarProperty Name="fechaHora" ColumnName="fechaHora" />
+                <ScalarProperty Name="numCaso" ColumnName="numCaso" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="idAplicaAntimicrobiano" ColumnName="idAplicaAntimicrobiano" />
+                <ScalarProperty Name="idAplicaAntimicrobianoGermen" ColumnName="idAplicaAntimicrobianoGermen" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estadoAplicaAntimicrobiano">
+            <EntityTypeMapping TypeName="Proa_Model.estadoAplicaAntimicrobiano">
+              <MappingFragment StoreEntitySet="estadoAplicaAntimicrobiano">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="esSuspender" ColumnName="esSuspender" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estadoPaciente">
+            <EntityTypeMapping TypeName="Proa_Model.estadoPaciente">
+              <MappingFragment StoreEntitySet="estadoPaciente">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="germen">
+            <EntityTypeMapping TypeName="Proa_Model.germen">
+              <MappingFragment StoreEntitySet="germen">
+                <ScalarProperty Name="fechaIn" ColumnName="fechaIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="motivoSuspension">
+            <EntityTypeMapping TypeName="Proa_Model.motivoSuspension">
+              <MappingFragment StoreEntitySet="motivoSuspension">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="periodo">
+            <EntityTypeMapping TypeName="Proa_Model.periodo">
+              <MappingFragment StoreEntitySet="periodo">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="via">
+            <EntityTypeMapping TypeName="Proa_Model.via">
+              <MappingFragment StoreEntitySet="via">
+                <ScalarProperty Name="fechaHoraIn" ColumnName="fechaHoraIn" />
+                <ScalarProperty Name="idUsuarioIn" ColumnName="idUsuarioIn" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

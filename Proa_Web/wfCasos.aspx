@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/wfMasterProa.Master" AutoEventWireup="true" CodeBehind="wfCasos.aspx.cs" Inherits="Proa_Web.wfCasos" %>
+﻿<%@ Page Title="Casos Registrados" Language="C#" MasterPageFile="~/wfMasterProa.Master" AutoEventWireup="true" CodeBehind="wfCasos.aspx.cs" Inherits="Proa_Web.wfCasos" %>
+<%@ Register src="UserControl/mensajes.ascx" tagname="mensajes" tagprefix="uc1" %>
 <asp:Content ID="tit" ContentPlaceHolderID="Title" runat="server">
     <asp:Label ID="lblTitulo" CssClass="profile-text" runat="server" Text="Gestión de Casos Abiertos" Font-Size="Larger" Font-Italic="true" ForeColor="White"></asp:Label>
 </asp:Content>
@@ -44,20 +45,25 @@
                                 <h6 class="card-subtitle">Establezca los filtros deseados</h6>
                                 <div class="row text-left justify-content-md-start ">
                                     <div class="col-2 col-form-label">
-                                        <asp:label id="lblNomEspecialidad" runat="server" text="Especialidad"></asp:label>
+                                        <asp:label id="lblNomServicio" runat="server" text="Servicio"></asp:label>
                                     </div>
                                     <div class="col-3">
-                                        <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-control form-control-sm"></asp:DropDownList>
-                                    </div>                                    
+                                        <asp:DropDownList ID="ddlServicio" runat="server" CssClass="form-control form-control-sm" OnSelectedIndexChanged="ddlServicio_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                    </div>                                     
                                     <div class="col-3 checkbox checkbox-circle checkbox-success">
                                         <asp:CheckBox runat="server" ID="rdoNuewvosPacs" Text="Seguimiento" AutoPostBack="true" />
                                     </div>
                                     <div class="col-4 ">
-                                        <asp:Button ID="btnAgregarNuevoCaso" runat="server" Text="Agregar un nuevo caso" PostBackUrl="#" CssClass="btn btn-outline-info"></asp:Button>
+                                        <asp:Button ID="btnAgregarNuevoCaso" runat="server" Text="Agregar un nuevo caso" PostBackUrl="~/wfPaciente.aspx" CssClass="btn btn-outline-info"></asp:Button>
                                     </div>
                                 </div>
                                 <div class="row text-left justify-content-md-start ">
-                                    
+                                    <div class="col-2 col-form-label">
+                                        <asp:label id="lblNomEspecialidad" runat="server" text="Especialidad"></asp:label>
+                                    </div>
+                                    <div class="col-3">
+                                        <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-control form-control-sm" AutoPostBack="true" OnSelectedIndexChanged="ddlEspecialidad_SelectedIndexChanged"></asp:DropDownList>
+                                    </div>                                    
                                 </div>
                             </class>
                         </div>
@@ -75,37 +81,43 @@
             <div class="col-lg-12 col-xlg-12 col-md-12">                  
                 <div class="card border-primary">
                     <div class="card-block">
-                        <class="m-t-30">                                
+                        <class="">                                
                             <h6 class="card-subtitle">Casos Registrados</h6>
                             <div class="row text-left justify-content-md-start ">
-                                <div class="col-2 col-form-label">
-                                    <asp:GridView ID="grdResultadoBusq" runat="server" CssClass="table table-condensed table-hover table-responsive table-sm" 
+                                <div class="col-12 col-form-label">
+                                    <asp:GridView ID="grdResultadoBusq" runat="server" CssClass="table table-condensed table-hover table-responsive table-sm"
                                             AutoGenerateColumns="False" EmptyDataText="No se econtraron registros" AllowPaging="True"
-                                            PageSize="3">
+                                            PageSize="10" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" Font-Size="10pt">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
                                                         <asp:ImageButton ID="ibtnSeleccionar" runat="server" ImageUrl="~/image/icons/icon_edit_p.png" CommandName="EDITAR"/>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:BoundField DataField="idPaciente" HeaderText="ID" />                                                
-                                                <asp:BoundField DataField="apellido1" HeaderText="Apell 1"/>
-                                                <asp:BoundField DataField="apellido2" HeaderText="Apell 2"/>
-                                                <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-                                                <asp:BoundField DataField="Servicio" HeaderText="Servicio"/>
-                                                <asp:BoundField DataField="Especialidad" HeaderText="Especialidad"/>                                                                                                
+                                                <asp:BoundField DataField="idPaciente" HeaderText="ID" />                                                             
+                                                <asp:BoundField DataField="nombrePac" HeaderText="Nombre" />
+                                                <asp:BoundField DataField="ServicioInicial" HeaderText="Servicio"/>
+                                                <asp:BoundField DataField="EspecialidadInicial" HeaderText="Especialidad"/>                                                                                                
+                                                <asp:BoundField DataField="fechaIngreso" HeaderText="Fecha Ingreso" DataFormatString="{0:dd/MM/yyyy}"/>  
                                                 <asp:BoundField DataField="fechaUltSeguimiento" HeaderText="Último Seguim"/>                                                                                                
                                                 <asp:BoundField DataField="Estado" HeaderText="Estado"/>                                                                                                
                                             </Columns>
-                                            <AlternatingRowStyle BackColor="WhiteSmoke" />
-                                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                                            <PagerStyle BackColor="WhiteSmoke" ForeColor="LightBlue"  HorizontalAlign="Center" CssClass="cssPager"/>
+                                            <RowStyle ForeColor="#000066" Font-Size="10" />
+                                        <SelectedRowStyle BackColor="#55acee" Font-Bold="True" ForeColor="White" />
+                                        <FooterStyle BackColor="White" ForeColor="#000066" />
+                                        <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                                        <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" CssClass="cssPager" />
+                                        <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                        <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                        <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                        <SortedDescendingHeaderStyle BackColor="#00547E" />
                                         </asp:GridView>
                                 </div>                                
                             </div>
                         </class>
                     </div>
                 </div>
+                
             </div>
           </div>
           <!-- ============================================================== -->
@@ -115,7 +127,7 @@
             <%---------------------------------------------------------%>
             <%------------------ FINALIZA FORMULARIO --------------------%>
             <%---------------------------------------------------------%>
-
+            <uc1:mensajes ID="msgBox" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

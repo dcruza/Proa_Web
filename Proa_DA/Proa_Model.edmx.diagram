@@ -6,10 +6,36 @@
     <edmx:Diagrams>
       <Diagram DiagramId="994b2d2928234baab8cc62737f718b7b" Name="Diagram1">
         <EntityTypeShape EntityType="Proa_Model.paciente" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Proa_Model.telefonoPaciente" Width="1.5" PointX="3" PointY="1.625" />
-        <EntityTypeShape EntityType="Proa_Model.tipoTelefono" Width="1.5" PointX="0.75" PointY="5.5" />
+        <EntityTypeShape EntityType="Proa_Model.telefonoPaciente" Width="1.5" PointX="3.625" PointY="0.75" />
+        <EntityTypeShape EntityType="Proa_Model.tipoTelefono" Width="1.5" PointX="5.875" PointY="0.75" />
         <AssociationConnector Association="Proa_Model.FK_telefonoPaciente_paciente" />
         <AssociationConnector Association="Proa_Model.FK_telefonoPaciente_tipoTelefono" />
+        <EntityTypeShape EntityType="Proa_Model.vw_CIE104D" Width="1.5" PointX="11.5" PointY="1.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Proa_Model.vw_SERVICIOS_POR_CENTRO" Width="1.5" PointX="13.25" PointY="1.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Proa_Model.estanciaPaciente" Width="2" PointX="0.5" PointY="5.875" />
+        <AssociationConnector Association="Proa_Model.FK_estanciaPaciente_paciente" />
+        <EntityTypeShape EntityType="Proa_Model.vw_Estancia" Width="4.25" PointX="11" PointY="1.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Proa_Model.antimicrobiano" Width="1.5" PointX="9.625" PointY="9.25" />
+        <EntityTypeShape EntityType="Proa_Model.aplicaAntimicrobiano" Width="1.875" PointX="3.375" PointY="5.125" />
+        <EntityTypeShape EntityType="Proa_Model.aplicaAntimicrobianoGermen" Width="2.5" PointX="8.25" PointY="3.625" />
+        <EntityTypeShape EntityType="Proa_Model.aplicaAntimicrobianoSeguim" Width="2.375" PointX="12" PointY="3.5" />
+        <EntityTypeShape EntityType="Proa_Model.estadoAplicaAntimicrobiano" Width="2.375" PointX="8" PointY="0.75" />
+        <EntityTypeShape EntityType="Proa_Model.estadoPaciente" Width="1.5" PointX="12" PointY="9.25" />
+        <EntityTypeShape EntityType="Proa_Model.germen" Width="1.5" PointX="3" PointY="12.125" />
+        <EntityTypeShape EntityType="Proa_Model.motivoSuspension" Width="1.5" PointX="5.375" PointY="10.5" />
+        <EntityTypeShape EntityType="Proa_Model.periodo" Width="1.5" PointX="7.125" PointY="10.5" />
+        <EntityTypeShape EntityType="Proa_Model.via" Width="1.5" PointX="2.875" PointY="9.375" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoGermen_antimicrobiano" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobiano_estanciaPaciente" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoGermen_aplicaAntimicrobiano" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoGermen_estadoAplicaAntimicrobiano" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoGermen_germen" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoGermen_motivoSuspension" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoGermen_periodo" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoGermen_via" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoSeguim_aplicaAntimicrobianoGermen" />
+        <AssociationConnector Association="Proa_Model.FK_aplicaAntimicrobianoSeguim_estadoPaciente" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

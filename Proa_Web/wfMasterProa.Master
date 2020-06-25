@@ -143,11 +143,12 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li>
-                            <a href="wfPaciente.aspx" class="waves-effect"><i class="fa fa-users m-r-10" aria-hidden="true"></i>Pacientes</a>
-                        </li>
+                       
                         <li>
                             <a href="wfCasos.aspx" class="waves-effect"><i class="fa fa-hospital-o m-r-10" aria-hidden="true"></i>Casos</a>
+                        </li>
+                         <li>
+                            <a href="wfPaciente.aspx" class="waves-effect"><i class="fa fa-users m-r-10" aria-hidden="true"></i>Pacientes</a>
                         </li>
                         <li>
                             <a href="#" class="waves-effect"><i class="fa fa-medkit m-r-10" aria-hidden="true"></i>Antimicrobianos</a>

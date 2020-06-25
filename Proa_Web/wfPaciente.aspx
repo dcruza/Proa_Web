@@ -1,11 +1,29 @@
 ﻿<%@ Page Title="Gestión de Pacientes" Language="C#" MasterPageFile="~/wfMasterProa.Master" MaintainScrollPositionOnPostback="true" AutoEventWireup="true" CodeBehind="wfPaciente.aspx.cs" Inherits="Proa_Web.wfPaciente" %>
 
 <%@ Register src="UserControl/mensajes.ascx" tagname="mensajes" tagprefix="uc1" %>
+<%@ Register Src="~/UserControl/casoPaciente.ascx" TagPrefix="uc1" TagName="casoPaciente" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
+
 
 <asp:Content ID="tit" ContentPlaceHolderID="Title" runat="server">
     <asp:Label ID="lblTitulo" CssClass="profile-text" runat="server" Text="Gestión de Pacientes" Font-Size="Larger" Font-Italic="true" ForeColor="White"></asp:Label>
 </asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="Body" runat="server">
+    <script type="text/javascript">
+        // Script que levanta el Modal Popup de Bootstrap con los casos abiertos del paciente
+        function ShowPopup() {
+            // No permitir que se cierre el modal si el usuario hace click afuera del modal
+            $("#casoModal").modal({ backdrop: "static" }); 
+            $("#btnShowPopup").click();
+        }
+
+        function HidePopup() {
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        }
+    </script>
+
     <asp:ScriptManager ID="smgr" runat="server">
     </asp:ScriptManager>
     <asp:UpdatePanel ID="upl" runat="server">
@@ -131,18 +149,24 @@
                             <class="m-t-30 ">
                                  <h4 class="card-title m-t-10">Resultados de la Búsqueda</h4>                                                           
                                  <h6 class="card-subtitle">Seleccione el paciente para ver detalle</h6>
-                                 <div class="row text-left justify-content-md-start">
-                                    <div class="col-12 col-form-label">
+                                 <div class="row ">
+                                    <div class="col-12 ">
                                         <asp:GridView ID="grdResultadoBusq" runat="server" CssClass="table table-condensed table-hover table-responsive table-sm" 
                                             AutoGenerateColumns="False" EmptyDataText="No se econtraron registros" OnRowCommand="grdResultadoBusq_RowCommand" AllowPaging="True"
-                                            PageSize="3" OnPageIndexChanging="grdResultadoBusq_PageIndexChanging">
+                                            PageSize="3" OnPageIndexChanging="grdResultadoBusq_PageIndexChanging" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3">
                                             <Columns>
-
+                                                
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
-                                                        <asp:ImageButton ID="ibtnSeleccionar" runat="server" ImageUrl="~/image/icons/icon_edit_p.png" CommandName="EDITAR"/>
+                                                        <asp:ImageButton ID="ibtnSeleccionar" runat="server" ImageUrl="~/image/icons/icon_edit_p.png" CommandName="EDITAR" ToolTip="Editar Registro"/>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <ItemTemplate>
+                                                        <asp:ImageButton ID="ibtnNuevoCaso" runat="server" ImageUrl="~/image/icons/icon_nuevoCaso-3.png" CommandName="CASO" ToolTip="Agregar Estancia"/>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
                                                 <asp:BoundField DataField="idPaciente" HeaderText="ID" />                                                
                                                 <asp:BoundField DataField="apellido1" HeaderText="Apell 1"/>
                                                 <asp:BoundField DataField="apellido2" HeaderText="Apell 2"/>
@@ -153,9 +177,15 @@
                                                 
                                                 
                                             </Columns>
-                                            <AlternatingRowStyle BackColor="WhiteSmoke" />
-                                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                                            <PagerStyle BackColor="WhiteSmoke" ForeColor="LightBlue"  HorizontalAlign="Center" CssClass="cssPager"/>
+                                            <RowStyle ForeColor="#000066" Font-Size="Small"/>
+                                            <SelectedRowStyle BackColor="#55acee" Font-Bold="True" ForeColor="White" />
+                                            <FooterStyle BackColor="White" ForeColor="#000066" />
+                                            <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                                            <PagerStyle BackColor="White" ForeColor="#000066"  HorizontalAlign="Left" CssClass="cssPager"/>
+                                            <sortedascendingcellstyle backcolor="#F1F1F1" />
+                                            <sortedascendingheaderstyle backcolor="#007DBB" />
+                                            <sorteddescendingcellstyle backcolor="#CAC9C9" />
+                                            <sorteddescendingheaderstyle backcolor="#00547E" />
                                         </asp:GridView>
                                     </div>                            
                                  </div>
@@ -391,9 +421,57 @@
             <!-- ============================================================== -->
             <!-- Finaliza Page Content -->
             <!-- ============================================================== -->
-        <uc1:mensajes ID="msgBox" runat="server" />
-        <asp:HiddenField runat="server" ID="hdfBusquedaArcaMedisys" ClientIDMode="Static" /> 
-        <asp:HiddenField runat="server" ID="hdfPacManual" ClientIDMode="Static" Value="NO" />        
+            <uc1:mensajes ID="msgBox" runat="server" />
+            <asp:HiddenField runat="server" ID="hdfBusquedaArcaMedisys" ClientIDMode="Static" /> 
+            <asp:HiddenField runat="server" ID="hdfPacManual" ClientIDMode="Static" Value="NO" />
+    
+            <!-- ============================================================== -->
+            <!-- Inicia Modal PopUp de Bootstrap -->
+            <!-- ============================================================== -->   
+            <!-- Button trigger modal -->
+            <%--<button type="button" style="visibility:hidden;" class="btn btn-primary"
+                data-toggle="modal" data-target="#casoModal" id="btnShowPopup" >
+              Launch
+            </button>--%>
+            <!-- Modal -->
+            <%--<div id="casoModal" class="modal" role="dialog" data-backdrop="false">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Estancias / Casos</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <uc1:casoPaciente runat="server" ID="casoPaciente" OnServicioCambiado="casoPaciente_ServicioCambiado"/>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-twitter" data-dismiss="modal">Guardar</button>
+                    <button id="btn" type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>                    
+                  </div>
+                </div>
+              </div>
+            </div>--%>
+            <!-- ============================================================== -->
+            <!-- Finaliza Modal PopUp de Bootstrap -->
+            <!-- ============================================================== --> 
+
+            <%--<telerik:RadWindowManager ID="rwmVentanas" runat="server" Behaviors="Close" VisibleStatusbar="false" VisibleTitlebar="true">
+                <Windows>
+                    <telerik:RadWindow runat="server" ID="rwCasos" Modal="true" AutoSize="false" Width="900px" 
+                        CenterIfModal="false" Height="700px" Left="20" Top="20" Title="Estancias / Casos Paciente"
+                        Animation="None">
+                    </telerik:RadWindow>
+                </Windows>
+                <Windows>
+                    <telerik:RadWindow runat="server" ID="rwCasosConfirm" Modal="true" AutoSize="false" Width="900px" 
+                        CenterIfModal="false" Height="700px" Left="20" Top="20" Title="Estancias / Casos Paciente"
+                        Animation="None">
+                    </telerik:RadWindow>
+                </Windows>
+            </telerik:RadWindowManager>--%>
+
         </ContentTemplate>
      </asp:UpdatePanel>
      
